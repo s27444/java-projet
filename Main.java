@@ -271,24 +271,19 @@ public class Main {
         }
 
         System.out.print("Wybierz numer terminu: ");
-        int selectedAppointmentIndex;
-        try {
-            selectedAppointmentIndex = scanner.nextInt();
-            scanner.nextLine(); // Pobranie znaku nowej linii po wczytaniu liczby
-        } catch (InputMismatchException e) {
-            System.out.println("Niepoprawny wybór terminu.");
-            return;
+        String selectedAppointmentDate = scanner.nextLine();
+
+        Appointment selectedAppointment = null;
+        boolean foundAppointment = false;
+        for (Appointment appointment : availableAppointments) {
+            if (appointment.getDate().equals(selectedAppointmentDate)) {
+                selectedAppointment = appointment;
+                foundAppointment = true;
+                break;
+            }
         }
 
-        if (selectedAppointmentIndex < 1 || selectedAppointmentIndex > availableAppointments.size()) {
-            System.out.println("Niepoprawny wybór terminu.");
-            return;
-        }
-
-        Appointment selectedAppointment = availableAppointments.get(selectedAppointmentIndex - 1);
-        String selectedAppointmentDate = selectedAppointment.getDate();
-
-        if (!selectedAppointmentDate.equals(selectedDate)) {
+        if (!foundAppointment) {
             System.out.println("Niepoprawny wybór terminu.");
             return;
         }
